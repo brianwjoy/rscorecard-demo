@@ -1,0 +1,120 @@
+---
+title: "Unlocking College Scorecard Data:"
+subtitle: "Custom Comparisons and Earnings Insights <br>with `rscorecard`"
+author:  
+  name: Brian Joy
+format: 
+  revealjs:
+    theme: sky
+from: markdown+emoji
+---
+
+## Growing emphasis on earnings and ROI
+::: {.incremental}
+
+-   College Rankings
+-   Updated Carnegie Classification framework
+-   FVT/GE
+-   Accountability Framework in BBBA
+
+:::
+
+## College Scorecard History
+\
+
+::: {.incremental}
+-   2013: President Obama proposes federal postsecondary ratings system
+-   2015: Initial release under the Obama Administration
+-   2019: Updated to include program-level data on debt and earnings (Trump Administration)
+
+:::
+\
+
+Source:[NAICU Issue Issue Briefs](https://www.naicu.edu/policy-advocacy/issue-briefs/college-scorecard)
+
+::: {.notes}
+Stemmed from Obama Administration aim to create a federal ratings system
+The 2015 version primarily compiled existing data
+2019 - comprehensive source of data for institution and program level earnings data
+Personally, I am concerned that we are on a policy trajectory that focuses too narrowly on earnings (easy to measure)
+:::
+
+## Accessing and Exploring Scorecard
+
+::: {.incremental}
+-   Consumer facing web interface
+-   Excel file downloads
+-   API
+-   `rscorecard` or other API wrappers
+:::
+
+:::{.notes}
+Each of these has their own place
+:::
+
+
+# Introduction to `rscorecard`
+
+## Acknowledge Package Developer
+
+::::: columns
+::: {.column width="50%"}
+##TODO: Add logo
+:::
+
+## Set Up API Key 
+\
+
+1.    [Request Free Key](https://api.data.gov/signup/)
+
+\
+
+2.    Store API Key in R Session
+
+\
+
+```{.r}
+library(rscorecard)
+
+# Store API Key in R Environment
+
+## use your real key in place of the Xs
+sc_key('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx')
+
+```
+
+::: {.notes}
+-   Key persists only for current R session,
+but recommend saving it to your .renviron file to permanently store it
+:::
+
+## Explore Variables
+
+
+\
+
+#### Using built-in data dictionary
+
+\
+
+
+```{.r}
+library(rscorecard)
+
+# Search for full variable name
+Sc_dict("stabbr")
+
+# Search for variables that contain `state`
+sc_dict("state")
+
+# Search for variable that starts with `st`
+sc_dict("^st", search_col = "varname")
+
+
+```
+
+## Live Demonstration
+
+## Discussion of Scorecard Data Challenges
+
+## Audience Q&A
