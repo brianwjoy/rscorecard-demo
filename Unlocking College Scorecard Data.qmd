@@ -6,90 +6,242 @@ author:
 format: 
   revealjs:
     theme: sky
+    footer: https://github.com/brianwjoy/rscorecard-demo
 from: markdown+emoji
 ---
 
-## Growing emphasis on earnings and ROI
-::: {.incremental}
+## :mag: Follow Along
 
+\
+
+::: r-stack
+[![](../Media/github-mark.svg){fig-align="center" width="300"}](https://github.com/brianwjoy/rscorecard-demo)
+:::
+
+## :dart: Objectives
+
+::: incremental
+-   Understand the **historical context of the College Scorecard**
+-   Identify **strengths and weaknesses** in this data set
+-   **Leverage `rscorecard` package** to interact with College Scorecard data
+:::
+
+::: notes
+:::
+
+## :calendar: Agenda
+
+-   Growing Emphasis on Earnings
+-   College Scorecard Overview
+-   Introduction to `rscorecard`
+-   Live Demonstration
+-   Audience Questions
+
+## :money_with_wings: Growing emphasis on earnings
+
+::: incremental
 -   College Rankings
 -   Updated Carnegie Classification framework
 -   FVT/GE
 -   Accountability Framework in BBBA
-
 :::
 
 ## College Scorecard History
+
 \
 
-::: {.incremental}
+::: incremental
 -   2013: President Obama proposes federal postsecondary ratings system
 -   2015: Initial release under the Obama Administration
 -   2019: Updated to include program-level data on debt and earnings (Trump Administration)
-
 :::
+
 \
 
-Source:[NAICU Issue Issue Briefs](https://www.naicu.edu/policy-advocacy/issue-briefs/college-scorecard)
+Source: [NAICU Issue Briefs](https://www.naicu.edu/policy-advocacy/issue-briefs/college-scorecard)
 
-::: {.notes}
-Stemmed from Obama Administration aim to create a federal ratings system
-The 2015 version primarily compiled existing data
-2019 - comprehensive source of data for institution and program level earnings data
-Personally, I am concerned that we are on a policy trajectory that focuses too narrowly on earnings (easy to measure)
+::: notes
+Stemmed from Obama Administration aim to create a federal ratings system The 2015 version primarily compiled existing data 2019 - comprehensive source of data for institution and program level earnings data Personally, I am concerned that we are on a policy trajectory that focuses too narrowly on earnings (easy to measure)
 :::
 
 ## Accessing and Exploring Scorecard
 
-::: {.incremental}
--   Consumer facing web interface
--   Excel file downloads
--   API
--   `rscorecard` or other API wrappers
+::: incremental
+-   Consumer facing web interface: <https://collegescorecard.ed.gov/>
+-   Excel file downloads: <https://collegescorecard.ed.gov/data/>
+-   API: <https://collegescorecard.ed.gov/data/api-documentation/>
+-   [`rscorecard`](https://www.btskinner.io/rscorecard/index.html) or other API wrappers
 :::
 
-:::{.notes}
+::: notes
 Each of these has their own place
 :::
 
+------------------------------------------------------------------------
+
+:::::: incremental
+::::: columns
+::: {.column width="50%"}
+### :white_check_mark: Pros
+
+-   Most comprehensive public source of data on earnings
+-   Institution and Program level data
+-   Multiple modes of access
+:::
+
+::: {.column width="50%"}
+### :x: Cons
+
+-   Data is lagging by several years
+-   Data suppression challenges, especially at program level
+-   Earnings data only includes federally aided students
+:::
+:::::
+::::::
+
+::: notes
+:::
+
+# Notable Data Elements
+
+## Institution: UNITID
+
+-   Unit ID for institution
+-   Source: IPEDS
+-   AcadYr 2023-24, reported in IPEDS DCY2023-24
+
+## Institution: INSTNM
+
+-   Institution name
+-   Source: IPEDS
+-   AcadYr 2023-24, reported in IPEDS DCY2023-24, unless more recent data are available. Then the most recent data reported to IPEDS (through AcadYr 2023-24, at latest) are included.
+
+## Institution: STABBR
+
+-   State postcode
+-   Source: IPEDS
+-   AcadYr 2023-24, reported in IPEDS DCY2023-24, unless more recent data are available. Then the most recent data reported to IPEDS (through AcadYr 2023-24, at latest) are included.
+
+## Institution: CONTROL
+
+-   Control of institution (IPEDS)
+    -   1 = Public
+    -   2 = Private nonprofit
+    -   3 = Private for-profit
+-   Source: IPEDS
+-   AcadYr 2023-24, reported in IPEDS DCY2023-24
+
+## Institution: MD_EARN_WNE_P10
+
+-   Median earnings of students working and not enrolled 10 years after entry
+
+-   Source: Treasury
+
+-   Treasury AY2009-10, AY2010-11 pooled cohort measured in CY2020, CY2021, inflation adjusted to 2022 dollars
+
+## Institution: COUNT_WNE_P10
+
+-   Number of students working and not enrolled 10 years after entry
+-   Source: Treasury
+-   Treasury AY2009-10, AY2010-11 pooled cohort measured in CY2020, CY2021
+
+## Program: CIPCODE
+
+-   Classification of Instructional Programs (CIP) code for the field of study
+-   Source: NSLDS
+-   AY2020-21, reported in IPEDS DCY2021-22 -or- NSLDS pooled AY2019-20, AY2020-21 cohort. Uses CIP2020 codes.
+
+## Program: CIPDESC
+
+-   Text description of the field of study CIP Code
+-   Source: ED
+-   Classification of Instructional Programs, 2020 edition
+
+## Program: CREDLEV
+
+-   Level of credential
+-   Source: NSLDS
+-   AY2020-21, reported in IPEDS DCY2021-22 -or- NSLDS pooled AY2019-20, AY2020-21 cohort
+
+## Program: CREDLEV
+
+\
+
+1 UG Certificate or Diploma\
+2 Associate's Degree\
+3 Bachelor's Degree\
+4 Post-bacc Cert\
+5 Master's Degree\
+6 Doctoral Degree\
+7 First Professional Degree\
+8 Grad/Professional Cert\
+
+## Program: EARN_MDN_4YR
+
+-   Median earnings of graduates working and not enrolled 4 year after completing
+
+-   Source: Treasury
+
+-   Treasury AY2014-15, AY2015-16 pooled earnings cohort measured in CY2019, CY2020, inflation adjusted to 2021 dollars
+
+## Program: EARN_COUNT_WNE_4YR
+
+-   Number of graduates working and not enrolled 4 year after completing
+
+-   Source: Treasury
+
+-   Treasury AY2014-15, AY2015-16 pooled earnings cohort measured in CY2019, CY2020
 
 # Introduction to `rscorecard`
 
-## Acknowledge Package Developer
+## :mega: Package Developer
 
 ::::: columns
 ::: {.column width="50%"}
-##TODO: Add logo
+\
+
+![](../Media/rscorecard_logo.png){fig-align="center" width="200"}
 :::
 
-## Set Up API Key 
+::: {.column width="50%"}
 \
 
-1.    [Request Free Key](https://api.data.gov/signup/)
-
-\
-
-2.    Store API Key in R Session
+Benjamin Skinner
 
 \
 
-```{.r}
+<https://www.btskinner.io/rscorecard/>
+
+\
+
+<https://www.btskinner.io/>
+:::
+:::::
+
+## Set Up API Key
+
+\
+
+1.  Request Free Key: <https://api.data.gov/signup/>
+
+\
+
+2.  Store API Key in R Session
+
+``` r
 library(rscorecard)
 
 # Store API Key in R Environment
 
 ## use your real key in place of the Xs
 sc_key('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx')
-
 ```
 
-::: {.notes}
--   Key persists only for current R session,
-but recommend saving it to your .renviron file to permanently store it
+::: notes
+-   Key persists only for current R session, but recommend saving it to your .renviron file to permanently store it
 :::
 
 ## Explore Variables
-
 
 \
 
@@ -97,8 +249,7 @@ but recommend saving it to your .renviron file to permanently store it
 
 \
 
-
-```{.r}
+``` r
 library(rscorecard)
 
 # Search for full variable name
@@ -109,12 +260,21 @@ sc_dict("state")
 
 # Search for variable that starts with `st`
 sc_dict("^st", search_col = "varname")
+```
 
+## Basic Request Format
 
+\
+
+``` r
+df <- sc_init() %>% 
+  sc_filter() %>% # Filter institutions/programs
+  sc_select() %>% # Select variables of interest
+  sc_get()
 ```
 
 ## Live Demonstration
 
-## Discussion of Scorecard Data Challenges
+## :thought_balloon: Wrap Up...Q&A...Feedback
 
-## Audience Q&A
+![](../Media/TENNAIR%202025%20103%20-%20BJoy%20-%20College%20Scorecard.png){fig-align="center"}
